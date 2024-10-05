@@ -1,7 +1,7 @@
 <?php
-include "authguard.php"; // Ensure the user is authenticated
-include "../shared/connection.php"; // Database connection
-include "menu.html"; // Include the navigation menu
+include "authguard.php"; 
+include "../shared/connection.php"; 
+include "menu.html"; 
 
 $vendor_id = $_SESSION['userid'];
 

@@ -1,7 +1,7 @@
 <?php
-include "authguard.php";  // Ensure the user is authenticated
-include "../shared/connection.php";  // Database connection
-include "menu.html";  // Include the navigation menu
+include "authguard.php";  
+include "../shared/connection.php";  
+include "menu.html";  
 
 // Query to fetch orders along with product details
 $sql_result = mysqli_query($conn, "SELECT orders.order_id, orders.order_date, product.name, product.price, product.impath, product.detail 

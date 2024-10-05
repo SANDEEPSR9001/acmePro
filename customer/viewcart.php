@@ -1,9 +1,9 @@
 <?php
-include "authguard.php"; // Ensure the user is authenticated
-include "../shared/connection.php"; // Database connection
-include "menu.html"; // Include the navigation menu
+include "authguard.php"; 
+include "../shared/connection.php"; 
+include "menu.html"; 
 
-// Fetch items in the cart
+
 $sql_result = mysqli_query($conn, "SELECT * FROM cart JOIN product ON cart.pid=product.pid WHERE userid=$_SESSION[userid]");
 
 ?>

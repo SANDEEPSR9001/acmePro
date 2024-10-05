@@ -2,26 +2,26 @@
 include "../shared/connection.php";
 include "authguard.php";
 
-$pid = $_GET['pid'];  // Fetch the product ID from the URL parameter
+$pid = $_GET['pid'];  
 
 // Fetch product details from the database based on the product ID
 $query = "SELECT * FROM product WHERE pid='$pid'";
 $result = mysqli_query($conn, $query);
-$product = mysqli_fetch_assoc($result);  // Fetch the product as an associative array
+$product = mysqli_fetch_assoc($result);  
 
-// Check if the form was submitted to update product details
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $price = $_POST['price'];
     $detail = $_POST['detail'];
     
-    // If a new image is uploaded, process the image file
+    
     if (!empty($_FILES['image']['name'])) {
-        // Sanitize filename to prevent directory traversal and similar attacks
+        
         $filename = basename($_FILES['image']['name']);
         $impath = '../shared/images/' . $filename;
 
-        // Move uploaded file to the target directory
+       
         if (move_uploaded_file($_FILES['image']['tmp_name'], $impath)) {
             // Update query with the new image path
             $query = "UPDATE product SET name='$name', price='$price', detail='$detail', impath='$impath' WHERE pid='$pid'";
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Execute the query to update the product
     if (mysqli_query($conn, $query)) {
-        // Redirect back to the product view page after updating
+        
         header("Location: view.php");
         exit();
     } else {
@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" class="w-50 bg-warning p-4" enctype="multipart/form-data">
             <h4 class="text-center">Edit Product</h4>
             
-            <!-- Display existing image -->
             <?php if (!empty($product['impath'])): ?>
                 <div class="text-center mb-3">
                     <img src="<?php echo $product['impath']; ?>" alt="Current Image" class="img-fluid" style="max-height: 200px;">
