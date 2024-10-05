@@ -1,19 +1,3 @@
-<?php
-
-include "authguard.php";
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    
-
-</head>
-<body>
-    <h1>Customer Home Welcomes You</h1>
-</body>
-</html>
 <html>
     <head>
         <style>
@@ -22,6 +6,8 @@ include "authguard.php";
                 display:inline-block;
                 margin:10px;
                 padding:10px;
+                width:300px;
+                height:fit-content;
             }
             .pdt-img{
                 width: 100%;
@@ -35,41 +21,36 @@ include "authguard.php";
             .price{
                 font-size: 25px;
                 font-weight: bolder;
-
             }
             .price::after{
                 content:" Rs";
                 font-size: 12px;
-
             }
         </style>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
 </html>    
-<?php
 
+<?php
 include "authguard.php";
 include "../shared/connection.php";
 include "menu.html";
 
-$sql_result=mysqli_query($conn,"select * from product where owner=$_SESSION[userid]");
+$sql_result = mysqli_query($conn, "SELECT * FROM product");
 
-while($dbrow=mysqli_fetch_assoc($sql_result)){
-//     print_r($dbrow);
-//     echo "<br>";
-
-       echo "<div class='pdt'>
-                 <div class='name'>$dbrow[name]</div>
-                 <div class='price'>$dbrow[price]</div>
-                 <img class='pdt-img' src='$dbrow[impath]'>
-                 <div>$dbrow[detail]</div>
-                 <div>
-                     <div>
-                     <a href='addcart.php?pid=$dbrow[pid]'>
-                          <button class='btn btn-warning'> Add to Cart </button>
-                     </div>
-                 </div>            
-        </div>";
-
+while ($dbrow = mysqli_fetch_assoc($sql_result)) {
+    echo "
+    <div class='pdt'>
+        <div class='name'>{$dbrow['name']}</div>
+        <div class='price'>{$dbrow['price']}</div>
+        <img class='pdt-img' src='{$dbrow['impath']}'>
+        <div>{$dbrow['detail']}</div>
+        <div class='text-center'>
+            <a href='addcart.php?pid={$dbrow['pid']}'>
+                <button class='btn btn-warning'> Add to Cart </button>
+            </a>
+        </div>
+    </div>";
 }
-
 ?>

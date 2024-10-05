@@ -1,12 +1,20 @@
 <?php
 
-$cartid=$_GET['cartid'];
-echo "REceived pid=$pid";
+session_start();
 
 include "../shared/connection.php";
 
-mysqli_query($conn,"delete from cart where cartid=$cartid");
+$pid = $_GET['pid'];
+$userid = $_SESSION['userid'];
 
-header("location:viewcart.php");
+$query = "DELETE FROM cart WHERE pid = $pid AND userid = $userid";
+
+$result = mysqli_query($conn, $query);
+
+if ($result) {
+    header("Location: viewcart.php");
+} else {
+    echo "Error removing product from cart: " . mysqli_error($conn);
+}
 
 ?>
